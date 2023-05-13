@@ -85,7 +85,7 @@ fun NotesListScreen(
                     .fillMaxWidth(0.8f)
                     .padding(8.dp),
                 color = Color.White,
-                style = MaterialTheme.typography.h1
+                style = MaterialTheme.typography.h3
             )
 
             AnimatedVisibility(

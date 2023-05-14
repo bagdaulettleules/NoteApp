@@ -1,4 +1,4 @@
-package com.example.noteapp.feature_main.presentation
+package com.example.noteapp.feature_main.presentation.util
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.interaction.MutableInteractionSource

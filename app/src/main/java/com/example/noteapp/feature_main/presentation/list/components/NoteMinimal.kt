@@ -20,7 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.noteapp.feature_main.domain.model.Note
-import com.example.noteapp.feature_main.presentation.CircleButton
+import com.example.noteapp.feature_main.presentation.util.CircleButton
 import com.example.noteapp.ui.theme.BurntSienna
 import com.example.noteapp.ui.theme.NoteAppTheme
 

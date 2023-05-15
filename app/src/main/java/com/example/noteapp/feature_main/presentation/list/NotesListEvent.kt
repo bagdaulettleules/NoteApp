@@ -7,5 +7,5 @@ sealed class NotesListEvent {
     data class Order(val orderBy: OrderBy) : NotesListEvent()
     data class Delete(val note: Note) : NotesListEvent()
     object Restore : NotesListEvent()
-    data class ToggleOrderSection(val isVisible: Boolean) : NotesListEvent()
+    object ToggleOrderSection : NotesListEvent()
 }

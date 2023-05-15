@@ -6,10 +6,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -26,7 +26,6 @@ import com.example.noteapp.feature_main.domain.model.Note
 import com.example.noteapp.feature_main.presentation.list.components.NoteMinimal
 import com.example.noteapp.feature_main.presentation.list.components.OrderBySection
 import com.example.noteapp.feature_main.presentation.util.Screen
-import com.example.noteapp.feature_main.presentation.util.isScrollingUp
 import com.example.noteapp.ui.theme.*
 import kotlinx.coroutines.launch
 
@@ -43,25 +42,20 @@ fun NotesListScreen(
         modifier = Modifier.background(MaterialTheme.colors.background),
         scaffoldState = scaffoldState,
         floatingActionButton = {
-            AnimatedVisibility(
-                visible = viewState.isOrderSectionVisible,
-                enter = fadeIn() + slideInVertically(),
-                exit = fadeOut() + slideOutVertically()
+            FloatingActionButton(
+                onClick = {
+                    navController.navigate(Screen.NoteDetail.route)
+                },
+                shape = RoundedCornerShape(50)
             ) {
-                FloatingActionButton(
-                    onClick = {
-                        navController.navigate(Screen.NoteDetail.route)
-                    },
-                    shape = RoundedCornerShape(50)
-                ) {
-                    Icon(
-                        imageVector = Icons.Outlined.Add,
-                        contentDescription = "",
-                        tint = MaterialTheme.colors.onSurface
-                    )
-                }
+                Icon(
+                    imageVector = Icons.Outlined.Add,
+                    contentDescription = "",
+                    tint = MaterialTheme.colors.onSurface
+                )
             }
-        }
+        },
+        floatingActionButtonPosition = FabPosition.Center
     ) { paddingValues ->
         Column(
             modifier = Modifier
@@ -70,26 +64,39 @@ fun NotesListScreen(
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.Top
         ) {
-            val listState = rememberLazyListState()
-            val isScrollUp = listState.isScrollingUp()
-
-            if (listState.isScrollInProgress &&
-                isScrollUp != viewState.isOrderSectionVisible
-            ) {
-                onEvent(NotesListEvent.ToggleOrderSection(isScrollUp))
-            }
-
-            Text(
-                text = "My Notes",
+            Row(
                 modifier = Modifier
-                    .fillMaxWidth(0.8f)
+                    .fillMaxWidth()
                     .padding(8.dp),
-                color = Color.White,
-                style = MaterialTheme.typography.h3
-            )
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "My Notes",
+                    color = Color.White,
+                    style = MaterialTheme.typography.h3,
+                    maxLines = 1
+                )
+
+                Spacer(modifier = Modifier.width(16.dp))
+
+                IconButton(
+                    onClick = {
+                        onEvent(NotesListEvent.ToggleOrderSection)
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Sort,
+                        contentDescription = "Sort"
+                    )
+                }
+            }
 
             AnimatedVisibility(
                 visible = viewState.isOrderSectionVisible,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
                 enter = fadeIn() + expandVertically(),
                 exit = fadeOut() + slideOutVertically()
             ) {
@@ -106,7 +113,6 @@ fun NotesListScreen(
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize(),
-                state = listState,
                 contentPadding = PaddingValues(8.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
@@ -136,8 +142,10 @@ fun NotesListScreen(
                             }
                         }
                     )
+
                 }
             }
+
         }
     }
 }

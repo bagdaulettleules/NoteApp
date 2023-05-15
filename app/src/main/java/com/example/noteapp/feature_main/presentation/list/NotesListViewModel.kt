@@ -54,7 +54,7 @@ class NotesListViewModel @Inject constructor(
             }
             is NotesListEvent.ToggleOrderSection -> {
                 _state.value = state.value.copy(
-                    isOrderSectionVisible = event.isVisible
+                    isOrderSectionVisible = !state.value.isOrderSectionVisible
                 )
             }
         }

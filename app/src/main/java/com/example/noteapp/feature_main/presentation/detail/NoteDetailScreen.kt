@@ -19,10 +19,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.noteapp.core.util.TestTags
 import com.example.noteapp.feature_main.presentation.detail.components.HintTextField
 import com.example.noteapp.feature_main.presentation.util.UiEvent
 import com.example.noteapp.feature_main.presentation.util.defaultColorSet
@@ -53,6 +55,7 @@ fun NoteDetailScreen(
                 is UiEvent.ErrorOccurred -> {
                     scaffoldState.snackbarHostState.showSnackbar(uiEvent.message)
                 }
+
                 UiEvent.SuccessfullyCompleted -> {
                     navController.navigateUp()
                 }
@@ -66,6 +69,8 @@ fun NoteDetailScreen(
                 onClick = {
                     onEvent(NoteDetailEvent.NoteSaved)
                 },
+                modifier = Modifier
+                    .testTag(TestTags.SAVE_BUTTON),
                 backgroundColor = MaterialTheme.colors.primary
             ) {
                 Icon(imageVector = Icons.Default.Save, contentDescription = "Save")
@@ -126,7 +131,8 @@ fun NoteDetailScreen(
                 singleLine = true,
                 onFocusChange = {
                     onEvent(NoteDetailEvent.TitleFocusChanged(it))
-                }
+                },
+                testTag = TestTags.TITLE_TEXT_FIELD
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -141,7 +147,8 @@ fun NoteDetailScreen(
                 textStyle = MaterialTheme.typography.body1,
                 onFocusChange = {
                     onEvent(NoteDetailEvent.ContentFocusChanged(it))
-                }
+                },
+                testTag = TestTags.CONTENT_TEXT_FIELD
             )
 
         }

@@ -14,11 +14,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.example.noteapp.core.util.TestTags
 import com.example.noteapp.feature_main.domain.model.Note
 import com.example.noteapp.feature_main.presentation.util.CircleButton
 import com.example.noteapp.ui.theme.BurntSienna
@@ -41,7 +43,8 @@ fun NoteMinimal(
 ) {
     val iconSize = 48.dp
     Card(
-        modifier = modifier,
+        modifier = modifier
+            .testTag(TestTags.LIST_ITEM),
         shape = shape,
         backgroundColor = Color(note.color),
         contentColor = contentColor,
@@ -90,7 +93,8 @@ fun NoteMinimal(
             CircleButton(
                 modifier = Modifier
                     .size(iconSize)
-                    .align(Alignment.BottomEnd),
+                    .align(Alignment.BottomEnd)
+                    .testTag(TestTags.DELETE_BUTTON),
                 icon = Icons.Outlined.DeleteOutline,
                 color = MaterialTheme.colors.onSurface,
                 contentPadding = PaddingValues(iconSize / 4),

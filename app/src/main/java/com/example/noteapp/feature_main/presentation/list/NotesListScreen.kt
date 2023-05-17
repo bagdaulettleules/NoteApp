@@ -18,10 +18,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.noteapp.R
+import com.example.noteapp.core.util.TestTags
 import com.example.noteapp.feature_main.domain.model.Note
 import com.example.noteapp.feature_main.presentation.list.components.NoteMinimal
 import com.example.noteapp.feature_main.presentation.list.components.OrderBySection
@@ -46,11 +50,13 @@ fun NotesListScreen(
                 onClick = {
                     navController.navigate(Screen.NoteDetail.route)
                 },
+                modifier = Modifier
+                    .testTag(TestTags.ADD_BUTTON),
                 shape = RoundedCornerShape(50)
             ) {
                 Icon(
                     imageVector = Icons.Outlined.Add,
-                    contentDescription = "",
+                    contentDescription = stringResource(R.string.add_button_caption),
                     tint = MaterialTheme.colors.onSurface
                 )
             }
@@ -87,7 +93,7 @@ fun NotesListScreen(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Sort,
-                        contentDescription = "Sort"
+                        contentDescription = stringResource(R.string.sort_button_caption)
                     )
                 }
             }
@@ -101,6 +107,8 @@ fun NotesListScreen(
                 exit = fadeOut() + slideOutVertically()
             ) {
                 OrderBySection(
+                    modifier = Modifier
+                        .testTag(TestTags.ORDER_SECTION),
                     orderBy = viewState.orderBy,
                     onOrderChange = {
                         onEvent(NotesListEvent.Order(it))
@@ -179,18 +187,21 @@ fun getShapeByIndex(index: Int): Shape {
             bottomStart = 48.dp,
             bottomEnd = 48.dp
         )
+
         1 -> RoundedCornerShape(
             topStart = 48.dp,
             topEnd = 48.dp,
             bottomStart = 48.dp,
             bottomEnd = 0.dp
         )
+
         2 -> RoundedCornerShape(
             topStart = 48.dp,
             topEnd = 48.dp,
             bottomStart = 0.dp,
             bottomEnd = 48.dp
         )
+
         else -> RoundedCornerShape(
             topStart = 48.dp,
             topEnd = 0.dp,
